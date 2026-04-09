@@ -80,22 +80,20 @@ export default function MessageTemplate() {
   };
 
   return (
-    <div className="space-y-6">
-      {/* 页面标题 */}
+    <div className="space-y-6 rounded-[30px] border border-slate-200/80 bg-slate-50/90 p-5 md:p-6">
       <div>
         <h1 className="font-semibold text-gray-900">消息模板</h1>
-        <p className="text-sm text-gray-500 mt-1">管理小程序端订阅消息和内部通知模板</p>
+        <p className="mt-1 text-sm text-gray-500">管理小程序端订阅消息和内部通知模板</p>
       </div>
 
-      {/* 筛选区 */}
-      <div className="bg-white rounded-xl p-4 border border-gray-200">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <select className="px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+      <div className="rounded-lg bg-white px-5 py-5">
+        <div className="flex flex-wrap items-center gap-4 xl:flex-nowrap">
+          <select className="h-9 min-w-[220px] flex-1 rounded border border-[#DEE0E3] bg-white px-3 text-sm font-normal leading-6 text-[#172C50] focus:outline-none">
             <option>全部类型</option>
             <option>用户通知</option>
             <option>内部通知</option>
           </select>
-          <select className="px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <select className="h-9 min-w-[220px] flex-1 rounded border border-[#DEE0E3] bg-white px-3 text-sm font-normal leading-6 text-[#172C50] focus:outline-none">
             <option>全部状态</option>
             <option>启用</option>
             <option>禁用</option>
@@ -103,41 +101,44 @@ export default function MessageTemplate() {
           <input
             type="text"
             placeholder="搜索场景名称"
-            className="px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="h-9 min-w-[260px] flex-1 rounded border border-[#DEE0E3] bg-white px-3 text-sm font-normal leading-6 text-[#172C50] placeholder:text-[#9AA4B2] focus:outline-none"
           />
         </div>
       </div>
 
-      {/* 模板列表 */}
       <div className="space-y-4">
         {templatesData.map((template) => (
-          <div key={template.id} className="bg-white rounded-xl p-6 border border-gray-200 hover:shadow-md transition-all">
-            <div className="flex items-start justify-between mb-4">
+          <div key={template.id} className="rounded-xl border border-gray-200 bg-white p-6 transition-all hover:shadow-md">
+            <div className="mb-4 flex items-start justify-between">
               <div className="flex-1">
-                <div className="flex items-center gap-3 mb-2">
+                <div className="mb-2 flex items-center gap-3">
                   <h3 className="font-semibold text-gray-900">{template.scene}</h3>
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                    template.type === '用户通知' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'
-                  }`}>
+                  <span
+                    className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                      template.type === '用户通知' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'
+                    }`}
+                  >
                     {template.type}
                   </span>
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                    template.status === '启用' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                  }`}>
+                  <span
+                    className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                      template.status === '启用' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                    }`}
+                  >
                     {template.status}
                   </span>
                 </div>
-                <p className="text-sm text-gray-600 mb-3">触发条件：{template.trigger}</p>
-                <div className="bg-gray-50 rounded-lg p-4 mb-3">
+                <p className="mb-3 text-sm text-gray-600">触发条件：{template.trigger}</p>
+                <div className="mb-3 rounded-lg bg-gray-50 p-4">
                   <p className="text-sm text-gray-900">{template.content}</p>
                 </div>
                 {template.variables.length > 0 && (
-                  <div className="flex items-center gap-2 flex-wrap">
+                  <div className="flex flex-wrap items-center gap-2">
                     <span className="text-xs text-gray-600">可用变量：</span>
                     {template.variables.map((variable) => (
                       <span
                         key={variable}
-                        className="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono bg-blue-50 text-blue-700 border border-blue-200"
+                        className="inline-flex items-center rounded border border-blue-200 bg-blue-50 px-2 py-0.5 font-mono text-xs text-blue-700"
                       >
                         {`{{${variable}}}`}
                       </span>
@@ -145,19 +146,19 @@ export default function MessageTemplate() {
                   </div>
                 )}
               </div>
-              <div className="flex items-center gap-2 ml-4">
+              <div className="ml-4 flex items-center gap-2">
                 <button
                   onClick={() => handlePreview(template)}
-                  className="flex items-center gap-1 px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm text-gray-600 transition-colors hover:bg-gray-100"
                 >
-                  <Eye className="w-4 h-4" />
+                  <Eye className="h-4 w-4" />
                   预览
                 </button>
                 <button
                   onClick={() => handleEdit(template)}
-                  className="flex items-center gap-1 px-3 py-1.5 text-sm text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                  className="flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm text-blue-600 transition-colors hover:bg-blue-50"
                 >
-                  <Edit className="w-4 h-4" />
+                  <Edit className="h-4 w-4" />
                   编辑
                 </button>
               </div>
@@ -167,49 +168,48 @@ export default function MessageTemplate() {
         ))}
       </div>
 
-      {/* 编辑模板弹窗 */}
       {showEditModal && selectedTemplate && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
-          <div className="bg-white rounded-xl p-6 w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
-            <h2 className="font-semibold text-gray-900 mb-4">编辑消息模板</h2>
+          <div className="mx-4 max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-xl bg-white p-6">
+            <h2 className="mb-4 font-semibold text-gray-900">编辑消息模板</h2>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">场景名称</label>
+                <label className="mb-2 block text-sm font-medium text-gray-700">场景名称</label>
                 <input
                   type="text"
                   defaultValue={selectedTemplate.scene}
                   disabled
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg bg-gray-50 text-gray-600"
+                  className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-gray-600"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">触发条件</label>
+                <label className="mb-2 block text-sm font-medium text-gray-700">触发条件</label>
                 <input
                   type="text"
                   defaultValue={selectedTemplate.trigger}
                   disabled
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg bg-gray-50 text-gray-600"
+                  className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-gray-600"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="mb-2 block text-sm font-medium text-gray-700">
                   消息内容 <span className="text-red-500">*</span>
                 </label>
                 <textarea
                   rows={5}
                   defaultValue={selectedTemplate.content}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-gray-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 ></textarea>
-                <p className="text-xs text-gray-500 mt-1">严格遵循微信小程序订阅消息规范</p>
+                <p className="mt-1 text-xs text-gray-500">严格遵循微信小程序订阅消息规范</p>
               </div>
               {selectedTemplate.variables.length > 0 && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">可用变量</label>
+                  <label className="mb-2 block text-sm font-medium text-gray-700">可用变量</label>
                   <div className="flex flex-wrap gap-2">
                     {selectedTemplate.variables.map((variable: string, index: number) => (
                       <span
                         key={index}
-                        className="inline-flex items-center px-3 py-1 rounded-lg text-sm font-mono bg-blue-50 text-blue-700 border border-blue-200"
+                        className="inline-flex items-center rounded-lg border border-blue-200 bg-blue-50 px-3 py-1 font-mono text-sm text-blue-700"
                       >
                         {`{{${variable}}}`}
                       </span>
@@ -218,30 +218,30 @@ export default function MessageTemplate() {
                 </div>
               )}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">模板状态</label>
+                <label className="mb-2 block text-sm font-medium text-gray-700">模板状态</label>
                 <select
                   defaultValue={selectedTemplate.status}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-gray-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option>启用</option>
                   <option>禁用</option>
                 </select>
               </div>
             </div>
-            <div className="flex items-center justify-end gap-3 mt-6">
+            <div className="mt-6 flex items-center justify-end gap-3">
               <button
                 onClick={() => setShowEditModal(false)}
-                className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                className="rounded-lg px-4 py-2 text-gray-600 transition-colors hover:bg-gray-100"
               >
                 取消
               </button>
               <button
                 onClick={() => handlePreview(selectedTemplate)}
-                className="px-4 py-2 text-blue-600 border border-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                className="rounded-lg border border-blue-600 px-4 py-2 text-blue-600 transition-colors hover:bg-blue-50"
               >
                 预览效果
               </button>
-              <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              <button className="rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700">
                 保存修改
               </button>
             </div>
@@ -249,18 +249,17 @@ export default function MessageTemplate() {
         </div>
       )}
 
-      {/* 预览弹窗 */}
       {showPreviewModal && selectedTemplate && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
-          <div className="bg-white rounded-xl p-6 w-full max-w-md mx-4">
-            <h2 className="font-semibold text-gray-900 mb-4">消息预览</h2>
-            <div className="bg-gray-50 rounded-lg p-4 mb-4">
-              <div className="flex items-center gap-2 mb-3">
-                <Bell className="w-5 h-5 text-blue-600" />
+          <div className="mx-4 w-full max-w-md rounded-xl bg-white p-6">
+            <h2 className="mb-4 font-semibold text-gray-900">消息预览</h2>
+            <div className="mb-4 rounded-lg bg-gray-50 p-4">
+              <div className="mb-3 flex items-center gap-2">
+                <Bell className="h-5 w-5 text-blue-600" />
                 <span className="font-medium text-gray-900">{selectedTemplate.scene}</span>
               </div>
-              <div className="bg-white rounded-lg p-4 shadow-sm">
-                <p className="text-sm text-gray-900 whitespace-pre-wrap">
+              <div className="rounded-lg bg-white p-4 shadow-sm">
+                <p className="whitespace-pre-wrap text-sm text-gray-900">
                   {selectedTemplate.content
                     .replace(/\{\{订单号\}\}/g, 'ORD20260317001')
                     .replace(/\{\{快递公司\}\}/g, '顺丰速运')
@@ -272,16 +271,15 @@ export default function MessageTemplate() {
                     .replace(/\{\{绑定时间\}\}/g, '2026-03-17 10:30')
                     .replace(/\{\{套餐名称\}\}/g, '轻盈周包')
                     .replace(/\{\{当前库存\}\}/g, '45')
-                    .replace(/\{\{预警阈值\}\}/g, '50')
-                  }
+                    .replace(/\{\{预警阈值\}\}/g, '50')}
                 </p>
               </div>
             </div>
-            <p className="text-xs text-gray-500 mb-4">以上为模拟效果，实际显示以微信小程序为准</p>
+            <p className="mb-4 text-xs text-gray-500">以上为模拟效果，实际显示以微信小程序为准</p>
             <div className="flex items-center justify-end">
               <button
                 onClick={() => setShowPreviewModal(false)}
-                className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                className="rounded-lg bg-gray-600 px-4 py-2 text-white transition-colors hover:bg-gray-700"
               >
                 关闭
               </button>
@@ -290,12 +288,11 @@ export default function MessageTemplate() {
         </div>
       )}
 
-      {/* 说明 */}
-      <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
-        <h3 className="font-medium text-orange-900 mb-2">模板规范说明</h3>
-        <ul className="text-sm text-orange-800 space-y-1">
+      <div className="rounded-lg border border-orange-200 bg-orange-50 p-4">
+        <h3 className="mb-2 font-medium text-orange-900">模板规范说明</h3>
+        <ul className="space-y-1 text-sm text-orange-800">
           <li>• 严格遵循微信小程序订阅消息规范</li>
-          <li>• 支持变量替换语法（如 {'{订单号}'}、{'{快递公司}'}）</li>
+          <li>• 支持变量替换语法（如 {'{订单号}'}、{'{快递公司}'})</li>
           <li>• 编辑完成后可预览，以气泡形式模拟展示用户收到的消息效果</li>
           <li>• 预览无误后保存生效，立即应用于对应业务场景</li>
         </ul>

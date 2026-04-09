@@ -3,10 +3,12 @@ import MainLayout from "./layouts/MainLayout";
 import Dashboard from "./pages/Dashboard";
 import DataOverview from "./pages/data/DataOverview";
 import DataAnalysis from "./pages/data/DataAnalysis";
-import ServicePackage from "./pages/meal/ServicePackage";
-import PriceManagement from "./pages/meal/PriceManagement";
-import OrderRecords from "./pages/order/OrderRecords";
-import ShippingRecords from "./pages/order/ShippingRecords";
+// 代餐服务 - 暂时隐藏，代码保留
+// import ServicePackage from "./pages/meal/ServicePackage";
+// import PriceManagement from "./pages/meal/PriceManagement";
+// 订单管理 - 暂时隐藏，代码保留
+// import OrderRecords from "./pages/order/OrderRecords";
+// import ShippingRecords from "./pages/order/ShippingRecords";
 import UserList from "./pages/user/UserList";
 import RoleManagement from "./pages/user/RoleManagement";
 import MenuManagement from "./pages/user/MenuManagement";
@@ -21,10 +23,12 @@ export const router = createHashRouter([
       { index: true, Component: Dashboard },
       { path: "data/overview", Component: DataOverview },
       { path: "data/analysis", Component: DataAnalysis },
-      { path: "meal/service-package", Component: ServicePackage },
-      { path: "meal/price", Component: PriceManagement },
-      { path: "order/records", Component: OrderRecords },
-      { path: "order/shipping", Component: ShippingRecords },
+      // 代餐服务 - 暂时隐藏，代码保留
+      // { path: "meal/service-package", Component: ServicePackage },
+      // { path: "meal/price", Component: PriceManagement },
+      // 订单管理 - 暂时隐藏，代码保留
+      // { path: "order/records", Component: OrderRecords },
+      // { path: "order/shipping", Component: ShippingRecords },
       { path: "user/list", Component: UserList },
       { path: "user/roles", Component: RoleManagement },
       { path: "user/menu", Component: MenuManagement },

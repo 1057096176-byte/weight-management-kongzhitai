@@ -59,44 +59,46 @@ const menuItems: MenuItem[] = [
       },
     ],
   },
-  {
-    key: 'meal',
-    label: '代餐服务',
-    icon: <ShoppingBag className="w-5 h-5" />,
-    children: [
-      {
-        key: 'service-package',
-        label: '服务包维护',
-        icon: <Package className="w-4 h-4" />,
-        path: '/meal/service-package',
-      },
-      {
-        key: 'price',
-        label: '价格维护',
-        icon: <DollarSign className="w-4 h-4" />,
-        path: '/meal/price',
-      },
-    ],
-  },
-  {
-    key: 'order',
-    label: '订单管理',
-    icon: <ShoppingCart className="w-5 h-5" />,
-    children: [
-      {
-        key: 'order-records',
-        label: '订单记录',
-        icon: <ClipboardList className="w-4 h-4" />,
-        path: '/order/records',
-      },
-      {
-        key: 'shipping-records',
-        label: '发货记录',
-        icon: <Truck className="w-4 h-4" />,
-        path: '/order/shipping',
-      },
-    ],
-  },
+  // 代餐服务 - 暂时隐藏，代码保留
+  // {
+  //   key: 'meal',
+  //   label: '代餐服务',
+  //   icon: <ShoppingBag className="w-5 h-5" />,
+  //   children: [
+  //     {
+  //       key: 'service-package',
+  //       label: '服务包维护',
+  //       icon: <Package className="w-4 h-4" />,
+  //       path: '/meal/service-package',
+  //     },
+  //     {
+  //       key: 'price',
+  //       label: '价格维护',
+  //       icon: <DollarSign className="w-4 h-4" />,
+  //       path: '/meal/price',
+  //     },
+  //   ],
+  // },
+  // 订单管理 - 暂时隐藏，代码保留
+  // {
+  //   key: 'order',
+  //   label: '订单管理',
+  //   icon: <ShoppingCart className="w-5 h-5" />,
+  //   children: [
+  //     {
+  //       key: 'order-records',
+  //       label: '订单记录',
+  //       icon: <ClipboardList className="w-4 h-4" />,
+  //       path: '/order/records',
+  //     },
+  //     {
+  //       key: 'shipping-records',
+  //       label: '发货记录',
+  //       icon: <Truck className="w-4 h-4" />,
+  //       path: '/order/shipping',
+  //     },
+  //   ],
+  // },
   {
     key: 'user',
     label: '用户管理',
@@ -145,7 +147,7 @@ const menuItems: MenuItem[] = [
 
 export default function MainLayout() {
   const [collapsed, setCollapsed] = useState(false);
-  const [expandedKeys, setExpandedKeys] = useState<string[]>(['data', 'meal', 'order', 'user', 'system']);
+  const [expandedKeys, setExpandedKeys] = useState<string[]>(['data', 'user', 'system']);
   const location = useLocation();
 
   const toggleExpand = (key: string) => {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Download, AlertTriangle } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const funnelData = {
@@ -53,13 +53,6 @@ const pageRankData = [
   { page: '健康档案', pv: 17200, uv: 4800 },
 ];
 
-const sourceData = [
-  { name: '小程序直接访问', value: 45, color: '#3b82f6' },
-  { name: '微信分享', value: 30, color: '#10b981' },
-  { name: '公众号文章', value: 15, color: '#8b5cf6' },
-  { name: '其他渠道', value: 10, color: '#f59e0b' },
-];
-
 const userTypeData = [
   { name: '已绑定设备', value: 35.2, color: '#3b82f6' },
   { name: '未绑定设备', value: 64.8, color: '#e5e7eb' },
@@ -70,310 +63,254 @@ const purchaseData = [
   { name: '未购买代餐', value: 76.2, color: '#e5e7eb' },
 ];
 
-const errorData = [
-  { id: 'error-1', time: '2026-03-17 14:23:15', page: '/pages/payment/index', type: '网络超时', count: 3, rate: '0.02%' },
-  { id: 'error-2', time: '2026-03-17 13:45:32', page: '/pages/questionnaire/index', type: '数据格式错误', count: 5, rate: '0.03%' },
-  { id: 'error-3', time: '2026-03-17 12:18:42', page: '/pages/device/bind', type: '授权失败', count: 12, rate: '0.15%' },
-  { id: 'error-4', time: '2026-03-17 11:05:28', page: '/pages/home/index', type: '接口异常', count: 2, rate: '0.01%' },
-];
+const surfaceClassName = 'rounded-[24px] border border-slate-200 bg-white shadow-[0_18px_40px_-24px_rgba(15,23,42,0.18)]';
+const quickRangeOptions = ['今日', '近7日', '近30日', '自定义'] as const;
+const eventTypeOptions = ['全部类型', '用户行为', '核心流程', '功能使用', '业务转化'] as const;
+const userSegmentOptions = ['全部用户', '绑定设备用户', '购买代餐用户', '仅完成导诊用户'] as const;
+const tabTextClassName = 'relative px-2 pb-3 text-sm font-medium leading-5 transition-colors';
 
 export default function DataAnalysis() {
-  const [activeTab, setActiveTab] = useState<'funnel' | 'behavior' | 'error'>('funnel');
+  const [activeTab, setActiveTab] = useState<'funnel' | 'behavior'>('funnel');
   const [selectedFunnel, setSelectedFunnel] = useState('导诊流程');
-  const [timeRange, setTimeRange] = useState('近7日');
+  const [timeRange, setTimeRange] = useState<(typeof quickRangeOptions)[number]>('近7日');
+  const [eventType, setEventType] = useState<(typeof eventTypeOptions)[number]>('全部类型');
+  const [userSegment, setUserSegment] = useState<(typeof userSegmentOptions)[number]>('全部用户');
+
+  const handleResetFilters = () => {
+    setTimeRange('近7日');
+    setEventType('全部类型');
+    setUserSegment('全部用户');
+  };
 
   return (
-    <div className="space-y-6">
-      {/* 页面标题 */}
-      <div>
-        <h1 className="font-semibold text-gray-900">数据分析</h1>
-        <p className="text-sm text-gray-500 mt-1">深度分析用户行为和业务转化数据</p>
-      </div>
-
-      {/* 全局筛选栏 */}
-      <div className="bg-white rounded-xl p-4 border border-gray-200">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div>
-            <label className="block text-sm text-gray-600 mb-2">时间范围</label>
-            <select 
+    <div className="space-y-6 rounded-[30px] border border-slate-200/80 bg-slate-50/90 p-5 md:p-6">
+      <div className="rounded-lg bg-white px-5 py-5">
+        <div className="flex flex-wrap items-center gap-4 xl:flex-nowrap">
+          <label className="flex h-9 min-w-[280px] flex-1 items-center rounded border border-[#DEE0E3] bg-white px-3">
+            <span className="mr-3 shrink-0 text-sm font-normal leading-6 text-[#172C50]">时间范围</span>
+            <select
               value={timeRange}
-              onChange={(e) => setTimeRange(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onChange={(e) => setTimeRange(e.target.value as (typeof quickRangeOptions)[number])}
+              className="w-full bg-transparent text-sm font-normal leading-6 text-[#172C50] focus:outline-none"
             >
-              <option>今日</option>
-              <option>近7日</option>
-              <option>近30日</option>
-              <option>自定义</option>
+              {quickRangeOptions.map((option) => (
+                <option key={option}>{option}</option>
+              ))}
             </select>
-          </div>
-          <div>
-            <label className="block text-sm text-gray-600 mb-2">埋点类型</label>
-            <select className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-              <option>全部类型</option>
-              <option>用户行为</option>
-              <option>核心流程</option>
-              <option>功能使用</option>
-              <option>业务转化</option>
+          </label>
+
+          <label className="flex h-9 min-w-[280px] flex-1 items-center rounded border border-[#DEE0E3] bg-white px-3">
+            <span className="mr-3 shrink-0 text-sm font-normal leading-6 text-[#172C50]">埋点类型</span>
+            <select
+              value={eventType}
+              onChange={(e) => setEventType(e.target.value as (typeof eventTypeOptions)[number])}
+              className="w-full bg-transparent text-sm font-normal leading-6 text-[#172C50] focus:outline-none"
+            >
+              {eventTypeOptions.map((option) => (
+                <option key={option}>{option}</option>
+              ))}
             </select>
-          </div>
-          <div>
-            <label className="block text-sm text-gray-600 mb-2">用户分群</label>
-            <select className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-              <option>全部用户</option>
-              <option>绑定设备用户</option>
-              <option>购买代餐用户</option>
-              <option>仅完成导诊用户</option>
+          </label>
+
+          <label className="flex h-9 min-w-[280px] flex-1 items-center rounded border border-[#DEE0E3] bg-white px-3">
+            <span className="mr-3 shrink-0 text-sm font-normal leading-6 text-[#172C50]">用户分群</span>
+            <select
+              value={userSegment}
+              onChange={(e) => setUserSegment(e.target.value as (typeof userSegmentOptions)[number])}
+              className="w-full bg-transparent text-sm font-normal leading-6 text-[#172C50] focus:outline-none"
+            >
+              {userSegmentOptions.map((option) => (
+                <option key={option}>{option}</option>
+              ))}
             </select>
-          </div>
-        </div>
-      </div>
+          </label>
 
-      {/* Tab 切换 */}
-      <div className="flex items-center gap-2 border-b border-gray-200">
-        <button
-          onClick={() => setActiveTab('funnel')}
-          className={`px-4 py-2 font-medium transition-all ${
-            activeTab === 'funnel'
-              ? 'text-blue-600 border-b-2 border-blue-600'
-              : 'text-gray-600 hover:text-gray-900'
-          }`}
-        >
-          漏斗分析
-        </button>
-        <button
-          onClick={() => setActiveTab('behavior')}
-          className={`px-4 py-2 font-medium transition-all ${
-            activeTab === 'behavior'
-              ? 'text-blue-600 border-b-2 border-blue-600'
-              : 'text-gray-600 hover:text-gray-900'
-          }`}
-        >
-          用户行为分析
-        </button>
-        <button
-          onClick={() => setActiveTab('error')}
-          className={`px-4 py-2 font-medium transition-all ${
-            activeTab === 'error'
-              ? 'text-blue-600 border-b-2 border-blue-600'
-              : 'text-gray-600 hover:text-gray-900'
-          }`}
-        >
-          异常监控
-        </button>
-      </div>
-
-      {/* 漏斗分析 Tab */}
-      {activeTab === 'funnel' && (
-        <div className="space-y-6">
-          <div className="flex items-center gap-2">
-            {Object.keys(funnelData).map((funnel) => (
-              <button
-                key={funnel}
-                onClick={() => setSelectedFunnel(funnel)}
-                className={`px-4 py-2 rounded-lg text-sm transition-all ${
-                  selectedFunnel === funnel
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                {funnel}
-              </button>
-            ))}
-          </div>
-
-          <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">节点名称</th>
-                    <th className="px-6 py-3 text-right text-sm font-medium text-gray-600">访问人数</th>
-                    <th className="px-6 py-3 text-right text-sm font-medium text-gray-600">转化人数</th>
-                    <th className="px-6 py-3 text-right text-sm font-medium text-gray-600">转化率</th>
-                    <th className="px-6 py-3 text-right text-sm font-medium text-gray-600">流失人数</th>
-                    <th className="px-6 py-3 text-right text-sm font-medium text-gray-600">流失率</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {funnelData[selectedFunnel as keyof typeof funnelData].map((step) => (
-                    <tr key={step.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 text-sm text-gray-900">{step.step}</td>
-                      <td className="px-6 py-4 text-sm text-gray-900 text-right">{step.visitors.toLocaleString()}</td>
-                      <td className="px-6 py-4 text-sm text-gray-900 text-right">{step.converted.toLocaleString()}</td>
-                      <td className="px-6 py-4 text-sm text-green-600 text-right font-medium">{step.rate}%</td>
-                      <td className="px-6 py-4 text-sm text-gray-900 text-right">{step.lost.toLocaleString()}</td>
-                      <td className={`px-6 py-4 text-sm text-right font-medium ${
-                        step.lostRate > 40 ? 'text-red-600' : 'text-gray-900'
-                      }`}>
-                        {step.lostRate > 40 && <AlertTriangle className="w-4 h-4 inline mr-1" />}
-                        {step.lostRate}%
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* 用户行为分析 Tab */}
-      {activeTab === 'behavior' && (
-        <div className="space-y-6">
-          {/* 留存趋势 */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
-            <h3 className="font-medium text-gray-900 mb-4">用户活跃与留存趋势</h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={retentionData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                <XAxis dataKey="date" stroke="#999" />
-                <YAxis stroke="#999" />
-                <Tooltip />
-                <Legend />
-                <Line key="line-dau" type="monotone" dataKey="dau" stroke="#3b82f6" name="日活" strokeWidth={2} />
-                <Line key="line-day1" type="monotone" dataKey="day1" stroke="#10b981" name="次日留存率" strokeWidth={2} />
-                <Line key="line-day7" type="monotone" dataKey="day7" stroke="#8b5cf6" name="7日留存率" strokeWidth={2} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-
-          {/* 页面排行 */}
-          <div className="bg-white rounded-xl p-6 border border-gray-200">
-            <h3 className="font-medium text-gray-900 mb-4">页面访问排行 TOP 8</h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={pageRankData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                <XAxis dataKey="page" stroke="#999" />
-                <YAxis stroke="#999" />
-                <Tooltip />
-                <Legend />
-                <Bar key="bar-pv" dataKey="pv" fill="#3b82f6" name="PV" />
-                <Bar key="bar-uv" dataKey="uv" fill="#10b981" name="UV" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-
-          {/* 用户分布饼图 */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-xl p-6 border border-gray-200">
-              <h3 className="font-medium text-gray-900 mb-4 text-center">用户来源分布</h3>
-              <ResponsiveContainer width="100%" height={200}>
-                <PieChart>
-                  <Pie
-                    data={sourceData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={({ name, value }) => `${name}: ${value}%`}
-                    outerRadius={80}
-                    fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {sourceData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-
-            <div className="bg-white rounded-xl p-6 border border-gray-200">
-              <h3 className="font-medium text-gray-900 mb-4 text-center">设备绑定占比</h3>
-              <ResponsiveContainer width="100%" height={200}>
-                <PieChart>
-                  <Pie
-                    data={userTypeData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={({ name, value }) => `${name}: ${value}%`}
-                    outerRadius={80}
-                    fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {userTypeData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-
-            <div className="bg-white rounded-xl p-6 border border-gray-200">
-              <h3 className="font-medium text-gray-900 mb-4 text-center">代餐购买占比</h3>
-              <ResponsiveContainer width="100%" height={200}>
-                <PieChart>
-                  <Pie
-                    data={purchaseData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={({ name, value }) => `${name}: ${value}%`}
-                    outerRadius={80}
-                    fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {purchaseData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* 异常监控 Tab */}
-      {activeTab === 'error' && (
-        <div className="space-y-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <select className="px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option>全部异常类型</option>
-                <option>埋点上报异常</option>
-                <option>页面加载失败</option>
-                <option>设备同步失败</option>
-                <option>支付失败</option>
-              </select>
-            </div>
-            <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-              <Download className="w-4 h-4" />
-              导出异常日志
+          <div className="ml-auto flex items-center gap-3">
+            <button
+              onClick={handleResetFilters}
+              className="h-9 w-20 rounded border border-[#526FEA] bg-white text-sm font-normal text-[#526FEA] transition-colors hover:bg-[#F5F7FF]"
+            >
+              重置
+            </button>
+            <button className="h-9 w-20 rounded bg-[#526FEA] text-sm font-normal text-white transition-colors hover:bg-[#425ed8]">
+              查询
             </button>
           </div>
+        </div>
+      </div>
 
-          <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">异常时间</th>
-                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">页面路径</th>
-                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">错误类型</th>
-                    <th className="px-6 py-3 text-right text-sm font-medium text-gray-600">发生次数</th>
-                    <th className="px-6 py-3 text-right text-sm font-medium text-gray-600">异常率</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {errorData.map((error) => (
-                    <tr key={error.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 text-sm text-gray-900">{error.time}</td>
-                      <td className="px-6 py-4 text-sm text-gray-600 font-mono text-xs">{error.page}</td>
-                      <td className="px-6 py-4">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                          {error.type}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 text-sm text-gray-900 text-right">{error.count}</td>
-                      <td className="px-6 py-4 text-sm text-gray-900 text-right">{error.rate}</td>
+      <div className="rounded-lg bg-white px-5 pt-4 shadow-sm">
+        <div className="flex items-end gap-8 border-b border-[#F0F0F0]">
+          <button
+            onClick={() => setActiveTab('funnel')}
+            className={`${tabTextClassName} ${
+              activeTab === 'funnel' ? 'text-[#3F66FC] after:absolute after:inset-x-0 after:bottom-[-1px] after:border-b-2 after:border-[#3F66FC]' : 'text-[#54585F] hover:text-[#3F66FC]'
+            }`}
+          >
+            漏斗分析
+          </button>
+          <button
+            onClick={() => setActiveTab('behavior')}
+            className={`${tabTextClassName} ${
+              activeTab === 'behavior' ? 'text-[#3F66FC] after:absolute after:inset-x-0 after:bottom-[-1px] after:border-b-2 after:border-[#3F66FC]' : 'text-[#54585F] hover:text-[#3F66FC]'
+            }`}
+          >
+            用户行为分析
+          </button>
+        </div>
+      </div>
+
+      {activeTab === 'funnel' && (
+        <div className="space-y-4">
+          <div className="overflow-hidden rounded-lg bg-white shadow-sm">
+            <div className="px-5 pt-4">
+              <div className="flex flex-wrap items-end gap-8 border-b border-[#F0F0F0]">
+                {Object.keys(funnelData).map((funnel) => (
+                  <button
+                    key={funnel}
+                    onClick={() => setSelectedFunnel(funnel)}
+                    className={`${tabTextClassName} ${
+                      selectedFunnel === funnel ? 'text-[#3F66FC] after:absolute after:inset-x-0 after:bottom-[-1px] after:border-b-2 after:border-[#3F66FC]' : 'text-[#54585F] hover:text-[#3F66FC]'
+                    }`}
+                  >
+                    {funnel}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="border-t border-transparent px-5 py-5">
+              <div className="flex flex-col gap-1 pb-4">
+                <h3 className="text-base font-medium text-[#172C50]">{selectedFunnel}明细</h3>
+                <p className="text-sm text-[#7C8798]">按节点查看访问、转化与流失表现</p>
+              </div>
+
+              <div className="overflow-x-auto rounded-lg border border-[#F0F0F0]">
+                <table className="w-full min-w-[720px] border-separate border-spacing-0">
+                  <thead>
+                    <tr className="bg-[#FAFBFC]">
+                      <th className="border-b border-[#F0F0F0] px-6 py-3 text-left text-sm font-medium text-[#54585F]">节点名称</th>
+                      <th className="border-b border-[#F0F0F0] px-6 py-3 text-right text-sm font-medium text-[#54585F]">访问人数</th>
+                      <th className="border-b border-[#F0F0F0] px-6 py-3 text-right text-sm font-medium text-[#54585F]">转化人数</th>
+                      <th className="border-b border-[#F0F0F0] px-6 py-3 text-right text-sm font-medium text-[#54585F]">转化率</th>
+                      <th className="border-b border-[#F0F0F0] px-6 py-3 text-right text-sm font-medium text-[#54585F]">流失人数</th>
+                      <th className="border-b border-[#F0F0F0] px-6 py-3 text-right text-sm font-medium text-[#54585F]">流失率</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {funnelData[selectedFunnel as keyof typeof funnelData].map((step, index) => (
+                      <tr key={step.id} className={index % 2 === 0 ? 'bg-white' : 'bg-[#FCFDFE]'}>
+                        <td className="border-b border-[#F5F6F7] px-6 py-4 text-sm font-medium text-[#172C50]">{step.step}</td>
+                        <td className="border-b border-[#F5F6F7] px-6 py-4 text-right text-sm text-[#172C50]">{step.visitors.toLocaleString()}</td>
+                        <td className="border-b border-[#F5F6F7] px-6 py-4 text-right text-sm text-[#172C50]">{step.converted.toLocaleString()}</td>
+                        <td className="border-b border-[#F5F6F7] px-6 py-4 text-right text-sm font-medium text-[#3F66FC]">{step.rate}%</td>
+                        <td className="border-b border-[#F5F6F7] px-6 py-4 text-right text-sm text-[#172C50]">{step.lost.toLocaleString()}</td>
+                        <td className="border-b border-[#F5F6F7] px-6 py-4 text-right text-sm font-medium">
+                          <span className={`inline-flex items-center justify-end gap-1 ${step.lostRate > 40 ? 'text-[#F04438]' : 'text-[#54585F]'}`}>
+                            {step.lostRate > 40 && <AlertTriangle className="h-4 w-4" />}
+                            {step.lostRate}%
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'behavior' && (
+        <div className="space-y-6">
+          <div className={`${surfaceClassName} p-6`}>
+            <h3 className="text-base font-semibold text-slate-900">用户活跃与留存趋势</h3>
+            <p className="mt-1 text-sm text-slate-500">同步观察活跃规模与留存表现变化</p>
+            <div className="mt-5 h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={retentionData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                  <XAxis dataKey="date" stroke="#94a3b8" />
+                  <YAxis stroke="#94a3b8" />
+                  <Tooltip />
+                  <Legend />
+                  <Line key="line-dau" type="monotone" dataKey="dau" stroke="#3b82f6" name="日活" strokeWidth={2.5} />
+                  <Line key="line-day1" type="monotone" dataKey="day1" stroke="#10b981" name="次日留存率" strokeWidth={2.5} />
+                  <Line key="line-day7" type="monotone" dataKey="day7" stroke="#8b5cf6" name="7日留存率" strokeWidth={2.5} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          <div className={`${surfaceClassName} p-6`}>
+            <h3 className="text-base font-semibold text-slate-900">页面访问排行 TOP 8</h3>
+            <p className="mt-1 text-sm text-slate-500">结合 PV / UV 观察高频访问页面</p>
+            <div className="mt-5 h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={pageRankData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                  <XAxis dataKey="page" stroke="#94a3b8" />
+                  <YAxis stroke="#94a3b8" />
+                  <Tooltip />
+                  <Legend />
+                  <Bar key="bar-pv" dataKey="pv" fill="#3b82f6" name="PV" radius={[8, 8, 0, 0]} />
+                  <Bar key="bar-uv" dataKey="uv" fill="#10b981" name="UV" radius={[8, 8, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div className={`${surfaceClassName} p-6`}>
+              <h3 className="text-center text-base font-semibold text-slate-900">设备绑定占比</h3>
+              <p className="mt-1 text-center text-sm text-slate-500">观察设备绑定用户在整体中的占比</p>
+              <div className="mt-5 h-[220px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={userTypeData}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      label={({ name, value }) => `${name}: ${value}%`}
+                      outerRadius={80}
+                      fill="#8884d8"
+                      dataKey="value"
+                    >
+                      {userTypeData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            <div className={`${surfaceClassName} p-6`}>
+              <h3 className="text-center text-base font-semibold text-slate-900">代餐购买占比</h3>
+              <p className="mt-1 text-center text-sm text-slate-500">查看代餐购买用户在整体中的渗透情况</p>
+              <div className="mt-5 h-[220px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={purchaseData}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      label={({ name, value }) => `${name}: ${value}%`}
+                      outerRadius={80}
+                      fill="#8884d8"
+                      dataKey="value"
+                    >
+                      {purchaseData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
             </div>
           </div>
         </div>

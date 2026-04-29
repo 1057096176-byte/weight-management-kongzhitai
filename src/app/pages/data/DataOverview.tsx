@@ -1,38 +1,45 @@
-import { TrendingUp, Users, Activity } from 'lucide-react';
+import { TrendingUp, Users, Activity, MousePointerClick } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Link } from 'react-router';
 
 const metrics = [
   { id: 'section-1', category: '用户活跃', items: [
-    { id: 'metric-1-1', label: '日活', value: '8,542', change: '+9.7%', trend: 'up' },
-    { id: 'metric-1-2', label: '月活', value: '45,230', change: '+12.3%', trend: 'up' },
-    { id: 'metric-1-3', label: '次日留存率', value: '68.5%', change: '+2.1%', trend: 'up' },
-    { id: 'metric-1-4', label: '7日留存率', value: '42.8%', change: '+1.5%', trend: 'up' },
+    { id: 'metric-1-1', label: '日活用户', value: '1,286', change: '+11.3%', trend: 'up' },
+    { id: 'metric-1-2', label: '月活用户', value: '8,740', change: '+15.6%', trend: 'up' },
+    { id: 'metric-1-3', label: '次日留存率', value: '62.4%', change: '+3.8%', trend: 'up' },
+    { id: 'metric-1-4', label: '7日留存率', value: '38.2%', change: '-1.2%', trend: 'down' },
   ]},
   { id: 'section-2', category: '核心流程', items: [
-    { id: 'metric-2-1', label: '导诊完成率', value: '78.5%', change: '+3.2%', trend: 'up' },
-    { id: 'metric-2-2', label: '方案开启率', value: '65.3%', change: '-1.8%', trend: 'down' },
-    { id: 'metric-2-3', label: '打卡完成率', value: '52.6%', change: '+4.5%', trend: 'up' },
+    { id: 'metric-2-1', label: '授权完成率', value: '89.3%', change: '+2.1%', trend: 'up' },
+    { id: 'metric-2-2', label: '模块进入率', value: '74.6%', change: '+5.4%', trend: 'up' },
+    { id: 'metric-2-3', label: '对话完成率', value: '68.1%', change: '+3.7%', trend: 'up' },
   ]},
-  { id: 'section-3', category: '业务转化', items: [
-    { id: 'metric-3-1', label: '代餐套餐购买转化率', value: '23.8%', change: '+2.1%', trend: 'up' },
-    { id: 'metric-3-2', label: '设备绑定率', value: '35.2%', change: '+5.6%', trend: 'up' },
+  { id: 'section-3', category: '模块热度', items: [
+    { id: 'metric-3-1', label: '有问必答点击率', value: '42.5%', change: '+6.3%', trend: 'up' },
+    { id: 'metric-3-2', label: '健康评估点击率', value: '28.7%', change: '+2.8%', trend: 'up' },
+    { id: 'metric-3-3', label: '预约挂号点击率', value: '18.4%', change: '-0.9%', trend: 'down' },
+    { id: 'metric-3-4', label: '减重预测点击率', value: '10.4%', change: '+1.2%', trend: 'up' },
+    { id: 'metric-3-5', label: '健康管理服务包点击率', value: '8.0%', change: '+0.6%', trend: 'up' },
   ]},
 ];
 
 const funnels = [
-  { id: 'funnel-1', name: '导诊流程漏斗', rate: '78.5%', color: 'blue' },
-  { id: 'funnel-2', name: '设备绑定漏斗', rate: '85.3%', color: 'green' },
-  { id: 'funnel-3', name: '代餐转化漏斗', rate: '23.8%', color: 'purple' },
-  { id: 'funnel-4', name: '打卡流程漏斗', rate: '52.6%', color: 'orange' },
+  { id: 'funnel-1', name: '授权转化漏斗', rate: '89.3%', color: 'blue' },
+  { id: 'funnel-2', name: '有问必答漏斗', rate: '68.1%', color: 'purple' },
+  { id: 'funnel-3', name: '健康评估漏斗', rate: '52.4%', color: 'green' },
+  { id: 'funnel-4', name: '预约挂号漏斗', rate: '35.6%', color: 'orange' },
+  { id: 'funnel-5', name: '减重预测漏斗', rate: '21.6%', color: 'blue' },
+  { id: 'funnel-6', name: '服务包转化漏斗', rate: '2.3%', color: 'purple' },
 ];
 
 const activeData = [
-  { date: '02/16', dau: 7200, mau: 42000 },
-  { date: '02/23', dau: 7500, mau: 42500 },
-  { date: '03/02', dau: 7800, mau: 43200 },
-  { date: '03/09', dau: 8100, mau: 44100 },
-  { date: '03/16', dau: 8542, mau: 45230 },
+  { date: '04/22', dau: 1050, mau: 7800 },
+  { date: '04/23', dau: 1120, mau: 8100 },
+  { date: '04/24', dau: 1180, mau: 8350 },
+  { date: '04/25', dau: 1095, mau: 8420 },
+  { date: '04/26', dau: 1230, mau: 8560 },
+  { date: '04/27', dau: 1210, mau: 8680 },
+  { date: '04/28', dau: 1286, mau: 8740 },
 ];
 
 const surfaceClassName = 'rounded-[24px] border border-slate-200 bg-white shadow-[0_18px_40px_-24px_rgba(15,23,42,0.18)]';
@@ -45,8 +52,8 @@ const sectionAccentMap = {
     icon: Activity,
     iconClassName: 'text-sky-300',
   },
-  业务转化: {
-    icon: TrendingUp,
+  模块热度: {
+    icon: MousePointerClick,
     iconClassName: 'text-emerald-300',
   },
 } as const;
@@ -98,7 +105,7 @@ export default function DataOverview() {
       })}
 
       <div className="space-y-4">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {funnels.map((funnel) => (
             <Link
               key={funnel.id}

@@ -3,75 +3,93 @@ import { AlertTriangle } from 'lucide-react';
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const funnelData = {
-  '导诊流程': [
-    { id: 'funnel-step-1-1', step: '入口点击', visitors: 10000, converted: 8500, rate: 85, lost: 1500, lostRate: 15 },
-    { id: 'funnel-step-1-2', step: '开始问卷', visitors: 8500, converted: 7800, rate: 91.8, lost: 700, lostRate: 8.2 },
-    { id: 'funnel-step-1-3', step: '问卷完成', visitors: 7800, converted: 7200, rate: 92.3, lost: 600, lostRate: 7.7 },
-    { id: 'funnel-step-1-4', step: '生成方案', visitors: 7200, converted: 6800, rate: 94.4, lost: 400, lostRate: 5.6 },
-    { id: 'funnel-step-1-5', step: '方案开启', visitors: 6800, converted: 6530, rate: 96, lost: 270, lostRate: 4 },
+  '授权流程': [
+    { id: 'funnel-step-1-1', step: '打开授权页', visitors: 10000, converted: 9200, rate: 92, lost: 800, lostRate: 8 },
+    { id: 'funnel-step-1-2', step: '点击微信授权', visitors: 9200, converted: 8930, rate: 97.1, lost: 270, lostRate: 2.9 },
+    { id: 'funnel-step-1-3', step: '授权成功', visitors: 8930, converted: 8680, rate: 97.2, lost: 250, lostRate: 2.8 },
+    { id: 'funnel-step-1-4', step: '进入首页', visitors: 8680, converted: 8540, rate: 98.4, lost: 140, lostRate: 1.6 },
   ],
-  '设备绑定': [
-    { id: 'funnel-step-2-1', step: '绑定入口点击', visitors: 5000, converted: 4500, rate: 90, lost: 500, lostRate: 10 },
-    { id: 'funnel-step-2-2', step: '发起授权', visitors: 4500, converted: 4200, rate: 93.3, lost: 300, lostRate: 6.7 },
-    { id: 'funnel-step-2-3', step: '授权通过', visitors: 4200, converted: 3900, rate: 92.9, lost: 300, lostRate: 7.1 },
-    { id: 'funnel-step-2-4', step: '绑定成功', visitors: 3900, converted: 3700, rate: 94.9, lost: 200, lostRate: 5.1 },
-    { id: 'funnel-step-2-5', step: '数据首次同步', visitors: 3700, converted: 3550, rate: 95.9, lost: 150, lostRate: 4.1 },
+  '有问必答': [
+    { id: 'funnel-step-2-1', step: '点击有问必答入口', visitors: 8540, converted: 3630, rate: 42.5, lost: 4910, lostRate: 57.5 },
+    { id: 'funnel-step-2-2', step: '进入对话页', visitors: 3630, converted: 3410, rate: 93.9, lost: 220, lostRate: 6.1 },
+    { id: 'funnel-step-2-3', step: '发送首条消息', visitors: 3410, converted: 2890, rate: 84.8, lost: 520, lostRate: 15.2 },
+    { id: 'funnel-step-2-4', step: '获得AI回复', visitors: 2890, converted: 2780, rate: 96.2, lost: 110, lostRate: 3.8 },
+    { id: 'funnel-step-2-5', step: '进行多轮对话（≥3轮）', visitors: 2780, converted: 1860, rate: 66.9, lost: 920, lostRate: 33.1 },
   ],
-  '代餐转化': [
-    { id: 'funnel-step-3-1', step: '套餐入口点击', visitors: 8000, converted: 6000, rate: 75, lost: 2000, lostRate: 25 },
-    { id: 'funnel-step-3-2', step: '浏览套餐详情', visitors: 6000, converted: 4500, rate: 75, lost: 1500, lostRate: 25 },
-    { id: 'funnel-step-3-3', step: '加入购物车', visitors: 4500, converted: 2500, rate: 55.6, lost: 2000, lostRate: 44.4 },
-    { id: 'funnel-step-3-4', step: '发起支付', visitors: 2500, converted: 2100, rate: 84, lost: 400, lostRate: 16 },
-    { id: 'funnel-step-3-5', step: '支付完成', visitors: 2100, converted: 1900, rate: 90.5, lost: 200, lostRate: 9.5 },
+  '健康评估': [
+    { id: 'funnel-step-3-1', step: '点击健康评估入口', visitors: 8540, converted: 2450, rate: 28.7, lost: 6090, lostRate: 71.3 },
+    { id: 'funnel-step-3-2', step: '进入对话页', visitors: 2450, converted: 2310, rate: 94.3, lost: 140, lostRate: 5.7 },
+    { id: 'funnel-step-3-3', step: '开始评估问卷', visitors: 2310, converted: 1980, rate: 85.7, lost: 330, lostRate: 14.3 },
+    { id: 'funnel-step-3-4', step: '完成全部问题', visitors: 1980, converted: 1520, rate: 76.8, lost: 460, lostRate: 23.2 },
+    { id: 'funnel-step-3-5', step: '查看评估结果', visitors: 1520, converted: 1420, rate: 93.4, lost: 100, lostRate: 6.6 },
   ],
-  '打卡流程': [
-    { id: 'funnel-step-4-1', step: '打卡入口点击', visitors: 7000, converted: 5500, rate: 78.6, lost: 1500, lostRate: 21.4 },
-    { id: 'funnel-step-4-2', step: '选择打卡方式', visitors: 5500, converted: 4800, rate: 87.3, lost: 700, lostRate: 12.7 },
-    { id: 'funnel-step-4-3', step: '提交打卡', visitors: 4800, converted: 4200, rate: 87.5, lost: 600, lostRate: 12.5 },
-    { id: 'funnel-step-4-4', step: '打卡完成', visitors: 4200, converted: 3680, rate: 87.6, lost: 520, lostRate: 12.4 },
+  '预约挂号': [
+    { id: 'funnel-step-4-1', step: '点击预约挂号入口', visitors: 8540, converted: 1570, rate: 18.4, lost: 6970, lostRate: 81.6 },
+    { id: 'funnel-step-4-2', step: '进入对话页', visitors: 1570, converted: 1480, rate: 94.3, lost: 90, lostRate: 5.7 },
+    { id: 'funnel-step-4-3', step: '查看挂号卡片', visitors: 1480, converted: 1120, rate: 75.7, lost: 360, lostRate: 24.3 },
+    { id: 'funnel-step-4-4', step: '点击预约按钮', visitors: 1120, converted: 780, rate: 69.6, lost: 340, lostRate: 30.4 },
+    { id: 'funnel-step-4-5', step: '完成预约', visitors: 780, converted: 560, rate: 71.8, lost: 220, lostRate: 28.2 },
+  ],
+  '减重预测': [
+    { id: 'funnel-step-5-1', step: '点击减重预测入口', visitors: 8540, converted: 890, rate: 10.4, lost: 7650, lostRate: 89.6 },
+    { id: 'funnel-step-5-2', step: '进入对话页', visitors: 890, converted: 840, rate: 94.4, lost: 50, lostRate: 5.6 },
+    { id: 'funnel-step-5-3', step: '输入预测数据', visitors: 840, converted: 620, rate: 73.8, lost: 220, lostRate: 26.2 },
+    { id: 'funnel-step-5-4', step: '生成预测结果', visitors: 620, converted: 580, rate: 93.5, lost: 40, lostRate: 6.5 },
+    { id: 'funnel-step-5-5', step: '查看详细报告', visitors: 580, converted: 460, rate: 79.3, lost: 120, lostRate: 20.7 },
+  ],
+  '体重健康管理服务包': [
+    { id: 'funnel-step-6-1', step: '点击服务包入口', visitors: 8540, converted: 680, rate: 8.0, lost: 7860, lostRate: 92.0 },
+    { id: 'funnel-step-6-2', step: '浏览服务包详情', visitors: 680, converted: 620, rate: 91.2, lost: 60, lostRate: 8.8 },
+    { id: 'funnel-step-6-3', step: '选择服务包套餐', visitors: 620, converted: 380, rate: 61.3, lost: 240, lostRate: 38.7 },
+    { id: 'funnel-step-6-4', step: '提交订单', visitors: 380, converted: 260, rate: 68.4, lost: 120, lostRate: 31.6 },
+    { id: 'funnel-step-6-5', step: '完成支付', visitors: 260, converted: 195, rate: 75.0, lost: 65, lostRate: 25.0 },
   ],
 };
 
 const retentionData = [
-  { date: '03/11', dau: 7200, mau: 42000, day1: 65, day7: 40 },
-  { date: '03/12', dau: 7500, mau: 42500, day1: 66, day7: 41 },
-  { date: '03/13', dau: 7800, mau: 43200, day1: 67, day7: 41.5 },
-  { date: '03/14', dau: 8100, mau: 44100, day1: 68, day7: 42 },
-  { date: '03/15', dau: 7900, mau: 44500, day1: 67.5, day7: 42.3 },
-  { date: '03/16', dau: 8300, mau: 45000, day1: 68.2, day7: 42.6 },
-  { date: '03/17', dau: 8542, mau: 45230, day1: 68.5, day7: 42.8 },
+  { date: '04/22', dau: 1050, day1: 60.2, day7: 35.8 },
+  { date: '04/23', dau: 1120, day1: 61.5, day7: 36.2 },
+  { date: '04/24', dau: 1180, day1: 62.1, day7: 37.0 },
+  { date: '04/25', dau: 1095, day1: 61.8, day7: 37.4 },
+  { date: '04/26', dau: 1230, day1: 62.8, day7: 37.9 },
+  { date: '04/27', dau: 1210, day1: 62.0, day7: 38.0 },
+  { date: '04/28', dau: 1286, day1: 62.4, day7: 38.2 },
 ];
 
 const pageRankData = [
-  { page: '首页', pv: 45230, uv: 12500 },
-  { page: '健康方案', pv: 38400, uv: 10200 },
-  { page: '代餐商城', pv: 32100, uv: 8900 },
-  { page: '打卡页面', pv: 28600, uv: 7800 },
-  { page: '设备绑定', pv: 25300, uv: 6500 },
-  { page: '个人中心', pv: 22800, uv: 6200 },
-  { page: '订单列表', pv: 19500, uv: 5400 },
-  { page: '健康档案', pv: 17200, uv: 4800 },
+  { page: '授权页', pv: 12400, uv: 10000 },
+  { page: '首页', pv: 28600, uv: 8540 },
+  { page: '有问必答', pv: 18200, uv: 3630 },
+  { page: '健康评估', pv: 9800, uv: 2450 },
+  { page: '预约挂号', pv: 6300, uv: 1570 },
+  { page: '减重预测', pv: 4500, uv: 890 },
+  { page: '体重服务包', pv: 3200, uv: 680 },
 ];
 
-const userTypeData = [
-  { name: '已绑定设备', value: 35.2, color: '#3b82f6' },
-  { name: '未绑定设备', value: 64.8, color: '#e5e7eb' },
+const moduleUsageData = [
+  { name: '有问必答', value: 42.5, color: '#3b82f6' },
+  { name: '健康评估', value: 28.7, color: '#8b5cf6' },
+  { name: '预约挂号', value: 18.4, color: '#10b981' },
+  { name: '减重预测', value: 7.1, color: '#f59e0b' },
+  { name: '体重服务包', value: 3.3, color: '#ef4444' },
 ];
 
-const purchaseData = [
-  { name: '已购买代餐', value: 23.8, color: '#10b981' },
-  { name: '未购买代餐', value: 76.2, color: '#e5e7eb' },
+const timeDistData = [
+  { name: '上午 6-12时', value: 28.5, color: '#3b82f6' },
+  { name: '下午 12-18时', value: 35.2, color: '#10b981' },
+  { name: '晚间 18-24时', value: 30.8, color: '#8b5cf6' },
+  { name: '深夜 0-6时', value: 5.5, color: '#94a3b8' },
 ];
 
 const surfaceClassName = 'rounded-[24px] border border-slate-200 bg-white shadow-[0_18px_40px_-24px_rgba(15,23,42,0.18)]';
 const quickRangeOptions = ['今日', '近7日', '近30日', '自定义'] as const;
-const eventTypeOptions = ['全部类型', '用户行为', '核心流程', '功能使用', '业务转化'] as const;
-const userSegmentOptions = ['全部用户', '绑定设备用户', '购买代餐用户', '仅完成导诊用户'] as const;
+const eventTypeOptions = ['全部类型', '用户行为', '核心流程', '模块使用', '对话交互'] as const;
+const userSegmentOptions = ['全部用户', '新用户', '老用户', '高频对话用户'] as const;
 const tabTextClassName = 'relative px-2 pb-3 text-sm font-medium leading-5 transition-colors';
 
 export default function DataAnalysis() {
   const [activeTab, setActiveTab] = useState<'funnel' | 'behavior'>('funnel');
-  const [selectedFunnel, setSelectedFunnel] = useState('导诊流程');
+  const [selectedFunnel, setSelectedFunnel] = useState('授权流程');
   const [timeRange, setTimeRange] = useState<(typeof quickRangeOptions)[number]>('近7日');
   const [eventType, setEventType] = useState<(typeof eventTypeOptions)[number]>('全部类型');
   const [userSegment, setUserSegment] = useState<(typeof userSegmentOptions)[number]>('全部用户');
@@ -243,8 +261,8 @@ export default function DataAnalysis() {
           </div>
 
           <div className={`${surfaceClassName} p-6`}>
-            <h3 className="text-base font-semibold text-slate-900">页面访问排行 TOP 8</h3>
-            <p className="mt-1 text-sm text-slate-500">结合 PV / UV 观察高频访问页面</p>
+            <h3 className="text-base font-semibold text-slate-900">页面访问排行</h3>
+            <p className="mt-1 text-sm text-slate-500">各页面 PV / UV 对比（授权页、首页、5 个功能模块对话页）</p>
             <div className="mt-5 h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={pageRankData}>
@@ -262,13 +280,13 @@ export default function DataAnalysis() {
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <div className={`${surfaceClassName} p-6`}>
-              <h3 className="text-center text-base font-semibold text-slate-900">设备绑定占比</h3>
-              <p className="mt-1 text-center text-sm text-slate-500">观察设备绑定用户在整体中的占比</p>
+              <h3 className="text-center text-base font-semibold text-slate-900">功能模块使用分布</h3>
+              <p className="mt-1 text-center text-sm text-slate-500">首页 5 个功能模块的点击占比</p>
               <div className="mt-5 h-[220px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
-                      data={userTypeData}
+                      data={moduleUsageData}
                       cx="50%"
                       cy="50%"
                       labelLine={false}
@@ -277,7 +295,7 @@ export default function DataAnalysis() {
                       fill="#8884d8"
                       dataKey="value"
                     >
-                      {userTypeData.map((entry, index) => (
+                      {moduleUsageData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={entry.color} />
                       ))}
                     </Pie>
@@ -288,13 +306,13 @@ export default function DataAnalysis() {
             </div>
 
             <div className={`${surfaceClassName} p-6`}>
-              <h3 className="text-center text-base font-semibold text-slate-900">代餐购买占比</h3>
-              <p className="mt-1 text-center text-sm text-slate-500">查看代餐购买用户在整体中的渗透情况</p>
+              <h3 className="text-center text-base font-semibold text-slate-900">用户活跃时段分布</h3>
+              <p className="mt-1 text-center text-sm text-slate-500">不同时段用户活跃占比</p>
               <div className="mt-5 h-[220px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
-                      data={purchaseData}
+                      data={timeDistData}
                       cx="50%"
                       cy="50%"
                       labelLine={false}
@@ -303,7 +321,7 @@ export default function DataAnalysis() {
                       fill="#8884d8"
                       dataKey="value"
                     >
-                      {purchaseData.map((entry, index) => (
+                      {timeDistData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={entry.color} />
                       ))}
                     </Pie>

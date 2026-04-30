@@ -180,14 +180,16 @@ export default function DataAnalysis() {
                       <tr key={step.id} className={index % 2 === 0 ? 'bg-white' : 'bg-[#FCFDFE]'}>
                         <td className="border-b border-[#F5F6F7] px-6 py-4 text-sm font-medium text-[#172C50]">{step.step}</td>
                         <td className="border-b border-[#F5F6F7] px-6 py-4 text-right text-sm text-[#172C50]">{step.visitors.toLocaleString()}</td>
-                        <td className="border-b border-[#F5F6F7] px-6 py-4 text-right text-sm text-[#172C50]">{step.converted.toLocaleString()}</td>
-                        <td className="border-b border-[#F5F6F7] px-6 py-4 text-right text-sm font-medium text-[#3F66FC]">{step.rate}%</td>
-                        <td className="border-b border-[#F5F6F7] px-6 py-4 text-right text-sm text-[#172C50]">{step.lost.toLocaleString()}</td>
+                        <td className="border-b border-[#F5F6F7] px-6 py-4 text-right text-sm text-[#172C50]">{step.converted === 0 ? '-' : step.converted.toLocaleString()}</td>
+                        <td className="border-b border-[#F5F6F7] px-6 py-4 text-right text-sm font-medium text-[#3F66FC]">{step.converted === 0 ? '-' : `${step.rate}%`}</td>
+                        <td className="border-b border-[#F5F6F7] px-6 py-4 text-right text-sm text-[#172C50]">{step.converted === 0 ? '-' : step.lost.toLocaleString()}</td>
                         <td className="border-b border-[#F5F6F7] px-6 py-4 text-right text-sm font-medium">
+                          {step.converted === 0 ? <span className="text-[#54585F]">-</span> : (
                           <span className={`inline-flex items-center justify-end gap-1 ${step.lostRate > 40 ? 'text-[#F04438]' : 'text-[#54585F]'}`}>
                             {step.lostRate > 40 && <AlertTriangle className="h-4 w-4" />}
                             {step.lostRate}%
                           </span>
+                          )}
                         </td>
                       </tr>
                     ))}

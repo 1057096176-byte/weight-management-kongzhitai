@@ -7,42 +7,35 @@ const funnelData = {
     { id: 'funnel-step-1-1', step: '打开授权页', visitors: 10000, converted: 9200, rate: 92, lost: 800, lostRate: 8 },
     { id: 'funnel-step-1-2', step: '点击微信授权', visitors: 9200, converted: 8930, rate: 97.1, lost: 270, lostRate: 2.9 },
     { id: 'funnel-step-1-3', step: '授权成功', visitors: 8930, converted: 8680, rate: 97.2, lost: 250, lostRate: 2.8 },
-    { id: 'funnel-step-1-4', step: '进入首页', visitors: 8680, converted: 8540, rate: 98.4, lost: 140, lostRate: 1.6 },
+    { id: 'funnel-step-1-4', step: '进入首页', visitors: 8680, converted: 0, rate: 0, lost: 0, lostRate: 0 },
   ],
   '有问必答': [
-    { id: 'funnel-step-2-1', step: '点击有问必答入口', visitors: 8540, converted: 3630, rate: 42.5, lost: 4910, lostRate: 57.5 },
-    { id: 'funnel-step-2-2', step: '进入对话页', visitors: 3630, converted: 3410, rate: 93.9, lost: 220, lostRate: 6.1 },
-    { id: 'funnel-step-2-3', step: '发送首条消息', visitors: 3410, converted: 2890, rate: 84.8, lost: 520, lostRate: 15.2 },
-    { id: 'funnel-step-2-4', step: '获得AI回复', visitors: 2890, converted: 2780, rate: 96.2, lost: 110, lostRate: 3.8 },
-    { id: 'funnel-step-2-5', step: '进行多轮对话（≥3轮）', visitors: 2780, converted: 1860, rate: 66.9, lost: 920, lostRate: 33.1 },
+    { id: 'funnel-step-2-1', step: '点击有问必答入口（自动进入对话页）', visitors: 8540, converted: 3630, rate: 42.5, lost: 4910, lostRate: 57.5 },
+    { id: 'funnel-step-2-2', step: '发送首条消息', visitors: 3630, converted: 2890, rate: 79.6, lost: 740, lostRate: 20.4 },
+    { id: 'funnel-step-2-3', step: '获得AI回复', visitors: 2890, converted: 2310, rate: 79.9, lost: 580, lostRate: 20.1 },
+    { id: 'funnel-step-2-4', step: '进行多轮对话(≥3轮)', visitors: 2310, converted: 0, rate: 0, lost: 0, lostRate: 0 },
   ],
   '健康评估': [
-    { id: 'funnel-step-3-1', step: '点击健康评估入口', visitors: 8540, converted: 2450, rate: 28.7, lost: 6090, lostRate: 71.3 },
-    { id: 'funnel-step-3-2', step: '进入对话页', visitors: 2450, converted: 2310, rate: 94.3, lost: 140, lostRate: 5.7 },
-    { id: 'funnel-step-3-3', step: '开始评估问卷', visitors: 2310, converted: 1980, rate: 85.7, lost: 330, lostRate: 14.3 },
-    { id: 'funnel-step-3-4', step: '完成全部问题', visitors: 1980, converted: 1520, rate: 76.8, lost: 460, lostRate: 23.2 },
-    { id: 'funnel-step-3-5', step: '查看评估结果', visitors: 1520, converted: 1420, rate: 93.4, lost: 100, lostRate: 6.6 },
+    { id: 'funnel-step-3-1', step: '点击健康评估入口（自动进入对话页+推送BMI卡片）', visitors: 8540, converted: 2450, rate: 28.7, lost: 6090, lostRate: 71.3 },
+    { id: 'funnel-step-3-2', step: 'BMI正常→自动推送上传报告卡片', visitors: 980, converted: 640, rate: 65.3, lost: 340, lostRate: 34.7 },
+    { id: 'funnel-step-3-3', step: 'BMI正常→点击上传报告', visitors: 640, converted: 640, rate: 100, lost: 0, lostRate: 0 },
+    { id: 'funnel-step-3-4', step: '报告正常→自动推送结论', visitors: 380, converted: 0, rate: 0, lost: 0, lostRate: 0 },
+    { id: 'funnel-step-3-5', step: '报告异常→自动推送预约挂号卡片', visitors: 260, converted: 165, rate: 63.5, lost: 95, lostRate: 36.5 },
+    { id: 'funnel-step-3-6', step: '报告异常→点击预约挂号', visitors: 165, converted: 0, rate: 0, lost: 0, lostRate: 0 },
+    { id: 'funnel-step-3-7', step: 'BMI异常→自动推送预约挂号卡片', visitors: 1470, converted: 820, rate: 55.8, lost: 650, lostRate: 44.2 },
+    { id: 'funnel-step-3-8', step: 'BMI异常→点击预约挂号', visitors: 820, converted: 0, rate: 0, lost: 0, lostRate: 0 },
   ],
   '预约挂号': [
-    { id: 'funnel-step-4-1', step: '点击预约挂号入口', visitors: 8540, converted: 1570, rate: 18.4, lost: 6970, lostRate: 81.6 },
-    { id: 'funnel-step-4-2', step: '进入对话页', visitors: 1570, converted: 1480, rate: 94.3, lost: 90, lostRate: 5.7 },
-    { id: 'funnel-step-4-3', step: '查看挂号卡片', visitors: 1480, converted: 1120, rate: 75.7, lost: 360, lostRate: 24.3 },
-    { id: 'funnel-step-4-4', step: '点击预约按钮', visitors: 1120, converted: 780, rate: 69.6, lost: 340, lostRate: 30.4 },
-    { id: 'funnel-step-4-5', step: '完成预约', visitors: 780, converted: 560, rate: 71.8, lost: 220, lostRate: 28.2 },
+    { id: 'funnel-step-4-1', step: '点击预约挂号入口（自动进入对话页+推送挂号卡片）', visitors: 8540, converted: 1570, rate: 18.4, lost: 6970, lostRate: 81.6 },
+    { id: 'funnel-step-4-2', step: '点击体重管理中心门诊', visitors: 890, converted: 0, rate: 0, lost: 0, lostRate: 0 },
+    { id: 'funnel-step-4-3', step: '点击邵逸夫互联网医院', visitors: 680, converted: 0, rate: 0, lost: 0, lostRate: 0 },
   ],
   '减重预测': [
-    { id: 'funnel-step-5-1', step: '点击减重预测入口', visitors: 8540, converted: 890, rate: 10.4, lost: 7650, lostRate: 89.6 },
-    { id: 'funnel-step-5-2', step: '进入对话页', visitors: 890, converted: 840, rate: 94.4, lost: 50, lostRate: 5.6 },
-    { id: 'funnel-step-5-3', step: '输入预测数据', visitors: 840, converted: 620, rate: 73.8, lost: 220, lostRate: 26.2 },
-    { id: 'funnel-step-5-4', step: '生成预测结果', visitors: 620, converted: 580, rate: 93.5, lost: 40, lostRate: 6.5 },
-    { id: 'funnel-step-5-5', step: '查看详细报告', visitors: 580, converted: 460, rate: 79.3, lost: 120, lostRate: 20.7 },
+    { id: 'funnel-step-5-1', step: '点击减重预测入口（自动进入对话页+推送预测卡片）', visitors: 8540, converted: 890, rate: 10.4, lost: 7650, lostRate: 89.6 },
+    { id: 'funnel-step-5-2', step: '点击开始预测', visitors: 890, converted: 0, rate: 0, lost: 0, lostRate: 0 },
   ],
   '体重健康管理服务包': [
-    { id: 'funnel-step-6-1', step: '点击服务包入口', visitors: 8540, converted: 680, rate: 8.0, lost: 7860, lostRate: 92.0 },
-    { id: 'funnel-step-6-2', step: '浏览服务包详情', visitors: 680, converted: 620, rate: 91.2, lost: 60, lostRate: 8.8 },
-    { id: 'funnel-step-6-3', step: '选择服务包套餐', visitors: 620, converted: 380, rate: 61.3, lost: 240, lostRate: 38.7 },
-    { id: 'funnel-step-6-4', step: '提交订单', visitors: 380, converted: 260, rate: 68.4, lost: 120, lostRate: 31.6 },
-    { id: 'funnel-step-6-5', step: '完成支付', visitors: 260, converted: 195, rate: 75.0, lost: 65, lostRate: 25.0 },
+    { id: 'funnel-step-6-1', step: '点击服务包入口（自动进入对话页+推送服务包卡片）', visitors: 680, converted: 680, rate: 100, lost: 0, lostRate: 0 },
   ],
 };
 
@@ -57,7 +50,6 @@ const retentionData = [
 ];
 
 const pageRankData = [
-  { page: '授权页', pv: 12400, uv: 10000 },
   { page: '首页', pv: 28600, uv: 8540 },
   { page: '有问必答', pv: 18200, uv: 3630 },
   { page: '健康评估', pv: 9800, uv: 2450 },
@@ -82,22 +74,16 @@ const timeDistData = [
 ];
 
 const surfaceClassName = 'rounded-[24px] border border-slate-200 bg-white shadow-[0_18px_40px_-24px_rgba(15,23,42,0.18)]';
-const quickRangeOptions = ['今日', '近7日', '近30日', '自定义'] as const;
-const eventTypeOptions = ['全部类型', '用户行为', '核心流程', '模块使用', '对话交互'] as const;
-const userSegmentOptions = ['全部用户', '新用户', '老用户', '高频对话用户'] as const;
+const quickRangeOptions = ['今日', '近7日', '近30日'] as const;
 const tabTextClassName = 'relative px-2 pb-3 text-sm font-medium leading-5 transition-colors';
 
 export default function DataAnalysis() {
   const [activeTab, setActiveTab] = useState<'funnel' | 'behavior'>('funnel');
   const [selectedFunnel, setSelectedFunnel] = useState('授权流程');
   const [timeRange, setTimeRange] = useState<(typeof quickRangeOptions)[number]>('近7日');
-  const [eventType, setEventType] = useState<(typeof eventTypeOptions)[number]>('全部类型');
-  const [userSegment, setUserSegment] = useState<(typeof userSegmentOptions)[number]>('全部用户');
 
   const handleResetFilters = () => {
     setTimeRange('近7日');
-    setEventType('全部类型');
-    setUserSegment('全部用户');
   };
 
   return (
@@ -112,32 +98,6 @@ export default function DataAnalysis() {
               className="w-full bg-transparent text-sm font-normal leading-6 text-[#172C50] focus:outline-none"
             >
               {quickRangeOptions.map((option) => (
-                <option key={option}>{option}</option>
-              ))}
-            </select>
-          </label>
-
-          <label className="flex h-9 min-w-[280px] flex-1 items-center rounded border border-[#DEE0E3] bg-white px-3">
-            <span className="mr-3 shrink-0 text-sm font-normal leading-6 text-[#172C50]">埋点类型</span>
-            <select
-              value={eventType}
-              onChange={(e) => setEventType(e.target.value as (typeof eventTypeOptions)[number])}
-              className="w-full bg-transparent text-sm font-normal leading-6 text-[#172C50] focus:outline-none"
-            >
-              {eventTypeOptions.map((option) => (
-                <option key={option}>{option}</option>
-              ))}
-            </select>
-          </label>
-
-          <label className="flex h-9 min-w-[280px] flex-1 items-center rounded border border-[#DEE0E3] bg-white px-3">
-            <span className="mr-3 shrink-0 text-sm font-normal leading-6 text-[#172C50]">用户分群</span>
-            <select
-              value={userSegment}
-              onChange={(e) => setUserSegment(e.target.value as (typeof userSegmentOptions)[number])}
-              className="w-full bg-transparent text-sm font-normal leading-6 text-[#172C50] focus:outline-none"
-            >
-              {userSegmentOptions.map((option) => (
                 <option key={option}>{option}</option>
               ))}
             </select>

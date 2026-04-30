@@ -15,8 +15,7 @@ const metricsData = [
   { id: 'metric-4', label: '7日留存率', value: '38.2%', change: '-1.2%', trend: 'down', type: '用户活跃', alert: true },
   { id: 'metric-5', label: '授权完成率', value: '89.3%', change: '+2.1%', trend: 'up', type: '核心流程' },
   { id: 'metric-6', label: '模块进入率', value: '74.6%', change: '+5.4%', trend: 'up', type: '核心流程' },
-  { id: 'metric-7', label: '对话完成率', value: '68.1%', change: '+3.7%', trend: 'up', type: '核心流程' },
-  { id: 'metric-8', label: '对话流失率', value: '31.9%', change: '-3.7%', trend: 'down', type: '核心流程', alert: true },
+  { id: 'metric-7', label: '对话流失率', value: '57.5%', change: '-2.1%', trend: 'down', type: '核心流程', alert: true },
   { id: 'metric-9', label: '有问必答点击率', value: '42.5%', change: '+6.3%', trend: 'up', type: '模块热度' },
   { id: 'metric-10', label: '健康评估点击率', value: '28.7%', change: '+2.8%', trend: 'up', type: '模块热度' },
   { id: 'metric-11', label: '预约挂号点击率', value: '18.4%', change: '-0.9%', trend: 'down', type: '模块热度' },
@@ -112,7 +111,7 @@ export default function Dashboard() {
             <Legend />
             <Line key="line-dau" type="monotone" dataKey="dau" stroke="#8b5cf6" name="日活用户" strokeWidth={2} />
             <Line key="line-auth" type="monotone" dataKey="auth" stroke="#3b82f6" name="授权人数" strokeWidth={2} />
-            <Line key="line-chat" type="monotone" dataKey="chat" stroke="#10b981" name="对话人数" strokeWidth={2} />
+            <Line key="line-chat" type="monotone" dataKey="chat" stroke="#10b981" name="使用人数" strokeWidth={2} />
           </LineChart>
         </ResponsiveContainer>
       </div>

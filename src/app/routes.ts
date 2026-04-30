@@ -1,6 +1,5 @@
 import { createHashRouter } from "react-router";
 import MainLayout from "./layouts/MainLayout";
-import Dashboard from "./pages/Dashboard";
 import DataOverview from "./pages/data/DataOverview";
 import DataAnalysis from "./pages/data/DataAnalysis";
 // 代餐服务 - 暂时隐藏，代码保留
@@ -20,7 +19,7 @@ export const router = createHashRouter([
     path: "/",
     Component: MainLayout,
     children: [
-      { index: true, Component: Dashboard },
+      { index: true, Component: DataOverview },
       { path: "data/overview", Component: DataOverview },
       { path: "data/analysis", Component: DataAnalysis },
       // 代餐服务 - 暂时隐藏，代码保留

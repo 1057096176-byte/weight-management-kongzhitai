@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router';
 import { 
-  LayoutDashboard, 
-  BarChart3, 
+  BarChart3,
   ShoppingBag, 
   ShoppingCart, 
   Users, 
@@ -34,12 +33,6 @@ interface MenuItem {
 }
 
 const menuItems: MenuItem[] = [
-  {
-    key: 'dashboard',
-    label: '首页',
-    icon: <LayoutDashboard className="w-5 h-5" />,
-    path: '/',
-  },
   {
     key: 'data',
     label: '数据埋点',

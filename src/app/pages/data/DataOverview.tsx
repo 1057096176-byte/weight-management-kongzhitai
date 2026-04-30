@@ -1,4 +1,4 @@
-import { TrendingUp, Users, Activity, MousePointerClick } from 'lucide-react';
+import { TrendingUp, Users, Activity, MousePointerClick, Download } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Link } from 'react-router';
 
@@ -12,7 +12,7 @@ const metrics = [
   { id: 'section-2', category: '核心流程', items: [
     { id: 'metric-2-1', label: '授权完成率', value: '89.3%', change: '+2.1%', trend: 'up' },
     { id: 'metric-2-2', label: '模块进入率', value: '74.6%', change: '+5.4%', trend: 'up' },
-    { id: 'metric-2-3', label: '对话完成率', value: '68.1%', change: '+3.7%', trend: 'up' },
+    { id: 'metric-2-3', label: '对话流失率', value: '57.5%', change: '-2.1%', trend: 'down', alert: true },
   ]},
   { id: 'section-3', category: '模块热度', items: [
     { id: 'metric-3-1', label: '有问必答点击率', value: '42.5%', change: '+6.3%', trend: 'up' },
@@ -33,13 +33,13 @@ const funnels = [
 ];
 
 const activeData = [
-  { date: '04/22', dau: 1050, mau: 7800 },
-  { date: '04/23', dau: 1120, mau: 8100 },
-  { date: '04/24', dau: 1180, mau: 8350 },
-  { date: '04/25', dau: 1095, mau: 8420 },
-  { date: '04/26', dau: 1230, mau: 8560 },
-  { date: '04/27', dau: 1210, mau: 8680 },
-  { date: '04/28', dau: 1286, mau: 8740 },
+  { date: '04/22', dau: 1050, auth: 1320, usage: 720 },
+  { date: '04/23', dau: 1120, auth: 1400, usage: 780 },
+  { date: '04/24', dau: 1180, auth: 1480, usage: 830 },
+  { date: '04/25', dau: 1095, auth: 1360, usage: 760 },
+  { date: '04/26', dau: 1230, auth: 1540, usage: 870 },
+  { date: '04/27', dau: 1210, auth: 1510, usage: 850 },
+  { date: '04/28', dau: 1286, auth: 1600, usage: 910 },
 ];
 
 const surfaceClassName = 'rounded-[24px] border border-slate-200 bg-white shadow-[0_18px_40px_-24px_rgba(15,23,42,0.18)]';
@@ -68,6 +68,10 @@ export default function DataOverview() {
           <button className="h-9 rounded border border-[#DEE0E3] bg-white px-4 text-sm font-normal text-[#172C50] transition-colors hover:bg-[#F8FAFC]">昨日</button>
           <button className="h-9 rounded border border-[#DEE0E3] bg-white px-4 text-sm font-normal text-[#172C50] transition-colors hover:bg-[#F8FAFC]">近7日</button>
           <button className="h-9 rounded border border-[#DEE0E3] bg-white px-4 text-sm font-normal text-[#172C50] transition-colors hover:bg-[#F8FAFC]">近30日</button>
+          <button className="ml-auto flex h-9 items-center gap-2 rounded border border-[#526FEA] bg-white px-4 text-sm font-normal text-[#526FEA] transition-colors hover:bg-[#F5F7FF]">
+            <Download className="h-4 w-4" />
+            导出数据
+          </button>
         </div>
       </div>
 
@@ -145,7 +149,6 @@ export default function DataOverview() {
           <button className="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-600 transition-all hover:border-slate-300 hover:bg-white">日</button>
           <button className="rounded-2xl bg-slate-900 px-3 py-1.5 text-sm font-medium text-white shadow-sm">周</button>
           <button className="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-600 transition-all hover:border-slate-300 hover:bg-white">月</button>
-          <button className="rounded-2xl border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-600 transition-all hover:bg-blue-100">导出数据</button>
         </div>
         <div className="mt-6 h-[300px]">
           <ResponsiveContainer width="100%" height="100%">
@@ -155,8 +158,9 @@ export default function DataOverview() {
               <YAxis stroke="#94a3b8" />
               <Tooltip />
               <Legend />
-              <Line key="line-dau" type="monotone" dataKey="dau" stroke="#8b5cf6" name="日活" strokeWidth={2.5} />
-              <Line key="line-mau" type="monotone" dataKey="mau" stroke="#3b82f6" name="月活" strokeWidth={2.5} />
+              <Line key="line-dau" type="monotone" dataKey="dau" stroke="#8b5cf6" name="日活用户" strokeWidth={2.5} />
+              <Line key="line-auth" type="monotone" dataKey="auth" stroke="#3b82f6" name="授权人数" strokeWidth={2.5} />
+              <Line key="line-usage" type="monotone" dataKey="usage" stroke="#10b981" name="使用人数" strokeWidth={2.5} />
             </LineChart>
           </ResponsiveContainer>
         </div>
